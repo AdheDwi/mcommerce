@@ -1,15 +1,14 @@
-import React from 'react';
-import App, { Container } from 'next/app';
-import { Provider } from 'react-redux';
-import withRedux from 'next-redux-wrapper';
-import withReduxSaga from 'next-redux-saga';
+import React from "react";
+import App, { Container } from "next/app";
+import { Provider } from "react-redux";
+import withRedux from "next-redux-wrapper";
+import withReduxSaga from "next-redux-saga";
 
-import { configureStore } from '../store';
-import LayoutContainer from '../containers/layout';
+import { configureStore } from "../store";
+import LayoutContainer from "../containers/layout";
 
 class MyApp extends App {
-  
-  static async getInitialProps({ Component, ctx}) {
+  static async getInitialProps({ Component, ctx }) {
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
       : {};
@@ -21,9 +20,7 @@ class MyApp extends App {
     return (
       <Container>
         <Provider store={store}>
-          <LayoutContainer>
-            <Component {...pageProps} />
-          </LayoutContainer>
+          <Component {...pageProps} />
         </Provider>
       </Container>
     );
