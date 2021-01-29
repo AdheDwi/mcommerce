@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+
 import {
   Card,
   Button,
@@ -8,16 +9,29 @@ import {
   Input,
   FormFeedback,
 } from "reactstrap";
-
-import FacebookLogin from "react-facebook-login";
-import GoogleLogin from "react-google-login";
+import { Link } from "../routes";
 
 const HomeContainer = (props) => {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [emailErr, setEmailErr] = useState("");
-  // const [passwordErr, setPasswordErr] = useState("");
+  const [loved, setLoved] = useState([]);
 
+  useEffect(() => {
+    if (props.dataProduct.productPromo.length > 0) {
+      const getLoved = props.dataProduct.productPromo.map(
+        (product) => product.loved
+      );
+      setLoved(getLoved);
+    }
+  }, [props.dataProduct.productPromo.length]);
+
+  const addWislist = (e, id, number) => {
+    e.preventDefault();
+    const productLoved = [...loved];
+    productLoved[id] = number === 0 ? 1 : 0;
+    setLoved(productLoved);
+    console.log("jos");
+  };
+
+  console.log(loved);
   // const setLogin = () => {
   //   if (email.length < 1) {
   //     setEmailErr("Email tidak boleh kosong");
@@ -43,62 +57,69 @@ const HomeContainer = (props) => {
   console.log("dataProduct", props.dataProduct);
 
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <p>Ini Home</p>
-      {/* <Card className="card-login">
-        <h2 className="title-login">Login</h2>
-        <FormGroup className="form-login">
-          <Label for="email">Email</Label>
-          <Input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Masukan Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            invalid={emailErr.length > 0}
-          />
-          {emailErr.length > 0 && <FormFeedback>{emailErr}</FormFeedback>}
+    <div className="full-page-wrapper">
+      <div className="header-wrapper">
+        <FormGroup className="mb-0">
+          <Input type="text" name="search" placeholder="Search..." />
         </FormGroup>
-        <FormGroup className="form-login">
-          <Label for="password">Password</Label>
-          <Input
-            invalid={passwordErr.length > 0}
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Masukan Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {passwordErr.length > 0 && <FormFeedback>{passwordErr}</FormFeedback>}
-        </FormGroup>
-        <Button
-          className="mt-3 button-primary"
-          block
-          onClick={() => setLogin()}
-        >
-          Submit
-        </Button>
-
-        <p className="mt-4 mb-3">atau</p>
-        <div className="facebook-button-wrap">
-          <FacebookLogin
-            cssClass="btn btn-block button-facebook"
-            appId="" //APP ID NOT CREATED YET
-            fields="name,email,picture"
-            callback={responseFacebook}
-          />
+      </div>
+      <div className="category-wrapper">
+        <h1>Categories</h1>
+        <div className="category-scroll">
+          {props.dataProduct.category.map((item) => (
+            <Link route="/">
+              <div className="category" key={item.id}>
+                <img src={item.imageUrl} alt={item.name} />
+                <p>{item.name}</p>
+              </div>
+            </Link>
+          ))}
         </div>
-
-        <GoogleLogin
-          className="btn btn-block"
-          clientId="" //CLIENTID NOT CREATED YET
-          buttonText="LOGIN WITH GOOGLE"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-        />
-      </Card> */}
+      </div>
+      <div className="product-wrapper">
+        <h1>Product List</h1>
+        {props.dataProduct.productPromo.map((product, i) => (
+          <div className="card-product" key={product.id}>
+            <Link route="/">
+              <img src={product.imageUrl} alt={product.title} />
+            </Link>
+            <div className="product-desc">
+              <Link route="/">
+                <h2>{product.title}</h2>
+              </Link>
+              <a onClick={(e) => addWislist(e, i, loved[i])}>
+                <i className={`fa fa-${loved[i] > 0 ? "heart" : "heart-o"}`} />
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="menu-list">
+        <Link route="/">
+          <a className="menu active">
+            <i className="fa fa-home" aria-hidden="true"></i>
+            <span>Home</span>
+          </a>
+        </Link>
+        <Link route="/">
+          <a className="menu">
+            <i className="fa fa-heart" aria-hidden="true"></i>
+            <span>Wishlist</span>
+          </a>
+        </Link>
+        <Link route="/">
+          <a className="menu">
+            <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+            <span>Cart</span>
+          </a>
+        </Link>
+        <Link route="/">
+          <a className="menu">
+            <i className="fa fa-sign-out" aria-hidden="true"></i>
+            <span>Logout</span>
+          </a>
+        </Link>
+      </div>
     </div>
   );
 };
