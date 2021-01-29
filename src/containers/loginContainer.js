@@ -8,6 +8,9 @@ import {
   FormFeedback,
 } from "reactstrap";
 
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +29,14 @@ const Login = () => {
       setPasswordErr("");
       console.log({ email, password });
     }
+  };
+
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
+
+  const responseGoogle = (response) => {
+    console.log(response);
   };
 
   return (
@@ -65,6 +76,24 @@ const Login = () => {
         >
           Submit
         </Button>
+
+        <p className="mt-4 mb-3">atau</p>
+        <div className="facebook-button-wrap">
+          <FacebookLogin
+            cssClass="btn btn-block button-facebook"
+            appId="" //APP ID NOT CREATED YET
+            fields="name,email,picture"
+            callback={responseFacebook}
+          />
+        </div>
+
+        <GoogleLogin
+          className="btn btn-block"
+          clientId="" //CLIENTID NOT CREATED YET
+          buttonText="LOGIN WITH GOOGLE"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+        />
       </Card>
     </div>
   );

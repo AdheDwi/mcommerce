@@ -42,6 +42,10 @@ body {
   font-family: "Roboto", sans-serif;
   font-weight: 700;
 }
+.facebook-button-wrap,
+.facebook-button-wrap > span {
+  width: 100%;
+}
 
 /* Button Styles */
 .button-primary,
@@ -53,6 +57,7 @@ body {
   box-shadow: none;
   text-transform: uppercase;
   font-weight: 500;
+  font-family: "Roboto", sans-serif;
 }
 
 .button-secondary,
@@ -64,6 +69,20 @@ body {
   box-shadow: none;
   text-transform: uppercase;
   font-weight: 500;
+  font-family: "Roboto", sans-serif;
+}
+.button-facebook,
+.button-facebook:hover,
+.button-facebook:focus {
+  color: #ffffff;
+  background-color: #4c69ba;
+  border-color: #4c69ba;
+  box-shadow: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 15px;
 }
 
 .text-title {
