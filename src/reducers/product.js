@@ -5,6 +5,9 @@ import {
   GET_PRODUCT_BY_ID_REQUEST,
   GET_PRODUCT_BY_ID_SUCCESS,
   GET_PRODUCT_BY_ID_FAILURE,
+  GET_PRODUCT_WISHLIST_REQUEST,
+  GET_PRODUCT_WISHLIST_SUCCESS,
+  GET_PRODUCT_WISHLIST_FAILURE,
 } from "../constants";
 
 export const initialState = {
@@ -14,9 +17,9 @@ export const initialState = {
   loadingDetailProduct: false,
   errDetailProduct: null,
   detailProduct: {},
-  loadingProductLoved: false,
-  errProductLoved: null,
-  dataProductLoved: {},
+  loadingWishlist: false,
+  errWishlist: null,
+  dataWishlist: {},
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -45,7 +48,6 @@ export const productReducer = (state = initialState, action) => {
       };
 
     case GET_PRODUCT_BY_ID_REQUEST:
-      console.log("re", action);
       return {
         ...state,
         loadingDetailProduct: true,
@@ -53,7 +55,6 @@ export const productReducer = (state = initialState, action) => {
         detailProduct: {},
       };
     case GET_PRODUCT_BY_ID_SUCCESS:
-      console.log("action", action);
       return {
         ...state,
         loadingDetailProduct: false,
@@ -61,12 +62,33 @@ export const productReducer = (state = initialState, action) => {
         detailProduct: action.data,
       };
     case GET_PRODUCT_BY_ID_FAILURE:
-      console.log("err", action);
       return {
         ...state,
         loadingDetailProduct: false,
         errDetailProduct: action.err,
         detailProduct: {},
+      };
+
+    case GET_PRODUCT_WISHLIST_REQUEST:
+      return {
+        ...state,
+        loadingWishlist: true,
+        errWishlist: null,
+        dataWishlist: {},
+      };
+    case GET_PRODUCT_WISHLIST_SUCCESS:
+      return {
+        ...state,
+        loadingWishlist: false,
+        errWishlist: null,
+        dataWishlist: action.data,
+      };
+    case GET_PRODUCT_WISHLIST_FAILURE:
+      return {
+        ...state,
+        loadingWishlist: false,
+        errWishlist: action.err,
+        dataWishlist: {},
       };
 
     default:

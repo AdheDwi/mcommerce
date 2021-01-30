@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from "react";
+import Cookies from "universal-cookie";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
-import { Link } from "../routes";
+import { Alert } from "reactstrap";
 
 const DetailContainer = (props) => {
   const router = useRouter();
+  const cookies = new Cookies();
 
   const [loved, setLoved] = useState(0);
+  const [showAllert, setShowAllert] = useState(false);
 
   useEffect(() => {
     setLoved(props.detailProduct.loved);
   }, [props.detailProduct]);
+
+  useEffect(() => {
+    if (showAllert) {
+      setTimeout(() => {
+        setShowAllert(false);
+      }, 3000);
+    }
+  }, [showAllert]);
 
   const addWislist = (e, number) => {
     e.preventDefault();
@@ -18,21 +29,30 @@ const DetailContainer = (props) => {
     setLoved(setNumber);
   };
 
-  // const setLogin = () => {
-  //   if (email.length < 1) {
-  //     setEmailErr("Email tidak boleh kosong");
-  //   }
-  //   if (password.length < 1) {
-  //     setPasswordErr("Password tidak boleh kosong");
-  //   }
-  //   if (email.length > 0 && password.length > 0) {
-  //     setEmailErr("");
-  //     setPasswordErr("");
-  //     console.log({ email, password });
-  //   }
-  // };
+  const buyProduct = (data) => {
+    let productCart;
+    if (cookies.get("cart") === undefined) {
+      productCart = [data];
+      cookies.set("cart", productCart, { path: "/" });
+    } else {
+      const previousCart = cookies.get("cart");
+      productCart = previousCart.concat(data);
+      cookies.set("cart", productCart, { path: "/" });
+    }
+    setTimeout(() => {
+      setShowAllert(true);
+    }, 200);
+    // console.log("haha");
+  };
+
+  console.log("cc", cookies.get("cart"));
   return (
     <div className="full-page-wrapper pt-3">
+      {showAllert && (
+        <Alert className="alert-success" color="success">
+          Success add to cart
+        </Alert>
+      )}
       <div className="detail-product-image">
         <div className="abolute-wrapp">
           <a href="javascript:void(0)" onClick={() => router.back()}>
@@ -60,7 +80,19 @@ const DetailContainer = (props) => {
       </div>
       <div className="detail-product-action">
         <p>{props.detailProduct.price}</p>
-        <button className="btn button-primary">Buy</button>
+        <button
+          className="btn button-primary"
+          onClick={() =>
+            buyProduct({
+              title: props.detailProduct.title,
+              imageUrl: props.detailProduct.imageUrl,
+              loved,
+              price: props.detailProduct.price,
+            })
+          }
+        >
+          Buy
+        </button>
       </div>
     </div>
   );

@@ -9,7 +9,10 @@ const HomeContainer = (props) => {
   const [loved, setLoved] = useState([]);
 
   useEffect(() => {
-    if (props.dataProduct && props.dataProduct.productPromo.length > 0) {
+    if (
+      props.dataProduct.productPromo &&
+      props.dataProduct.productPromo.length > 0
+    ) {
       const getLoved = props.dataProduct.productPromo.map(
         (product) => product.loved
       );
@@ -60,39 +63,41 @@ const HomeContainer = (props) => {
       <div className="category-wrapper">
         <h1>Categories</h1>
         <div className="category-scroll">
-          {props.dataProduct &&
-            props.dataProduct.category.map((item) => (
-              <Link route="/">
-                <div className="category" key={item.id}>
-                  <img src={item.imageUrl} alt={item.name} />
-                  <p>{item.name}</p>
-                </div>
-              </Link>
-            ))}
+          {props.dataProduct.category
+            ? props.dataProduct.category.map((item) => (
+                <Link route="/">
+                  <div className="category" key={item.id}>
+                    <img src={item.imageUrl} alt={item.name} />
+                    <p>{item.name}</p>
+                  </div>
+                </Link>
+              ))
+            : ""}
         </div>
       </div>
       <div className="product-wrapper">
         <h1>Product List</h1>
-        {props.dataProduct &&
-          props.dataProduct.productPromo.map((product, i) => (
-            <div className="card-product" key={product.id}>
-              <Link href={`/detail/${product.id}`}>
-                <img src={product.imageUrl} alt={product.title} />
-              </Link>
-              <div className="product-desc">
+        {props.dataProduct.productPromo
+          ? props.dataProduct.productPromo.map((product, i) => (
+              <div className="card-product" key={product.id}>
                 <Link href={`/detail/${product.id}`}>
-                  <h2>{product.title}</h2>
+                  <img src={product.imageUrl} alt={product.title} />
                 </Link>
-                <a onClick={(e) => addWislist(e, i, loved[i])}>
-                  <i
-                    className={`fa fa-${loved[i] > 0 ? "heart" : "heart-o"}`}
-                  />
-                </a>
+                <div className="product-desc">
+                  <Link href={`/detail/${product.id}`}>
+                    <h2>{product.title}</h2>
+                  </Link>
+                  <a onClick={(e) => addWislist(e, i, loved[i])}>
+                    <i
+                      className={`fa fa-${loved[i] > 0 ? "heart" : "heart-o"}`}
+                    />
+                  </a>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          : ""}
       </div>
-      <Menu />
+      <Menu page={"home"} />
     </div>
   );
 };

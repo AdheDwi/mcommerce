@@ -5,6 +5,8 @@ import {
   GET_PRODUCT_FAILURE,
   GET_PRODUCT_BY_ID_SUCCESS,
   GET_PRODUCT_BY_ID_FAILURE,
+  GET_PRODUCT_WISHLIST_SUCCESS,
+  GET_PRODUCT_WISHLIST_FAILURE,
 } from "../constants";
 
 export function* getProductSaga() {
@@ -29,5 +31,18 @@ export function* getProductByIdSaga(action) {
     });
   } else {
     yield put({ type: GET_PRODUCT_BY_ID_FAILURE, err });
+  }
+}
+
+export function* getProductWishlistSaga() {
+  const { ok, err, data } = yield call(getProductApi);
+
+  if (ok) {
+    yield put({
+      type: GET_PRODUCT_WISHLIST_SUCCESS,
+      data: data[0].data.productPromo.filter((product) => product.loved === 1),
+    });
+  } else {
+    yield put({ type: GET_PRODUCT_WISHLIST_FAILURE, err });
   }
 }

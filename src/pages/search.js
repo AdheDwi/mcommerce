@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import Head from "next/head";
 import LoginContainer from "../containers/loginContainer";
-import WishlistContainer from "../containers/wishlistContainer";
+import SearchContainer from "../containers/searchContainer";
 
 import { getProductWishlistAction } from "../actions/product";
 
-const Wishlist = () => (
+const Search = () => (
   <Fragment>
     <Head>
       <title>MiniCommerce - Wishlist</title>
@@ -20,10 +20,10 @@ const Wishlist = () => (
   </Fragment>
 );
 
-Wishlist.getInitialProps = async (ctx) => {
+Search.getInitialProps = async (ctx) => {
   ctx.store.dispatch(getProductWishlistAction());
 
   return {};
 };
 
-export default Wishlist;
+export default Search;
