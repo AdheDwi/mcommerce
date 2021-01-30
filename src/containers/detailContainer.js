@@ -84,8 +84,10 @@ const DetailContainer = (props) => {
             buyProduct({
               title: props.detailProduct.title,
               imageUrl: props.detailProduct.imageUrl,
-              loved,
+              loved: props.detailProduct.loved,
               price: props.detailProduct.price,
+              id: props.detailProduct.id,
+              description: props.detailProduct.description,
             })
           }
         >

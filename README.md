@@ -1,15 +1,18 @@
-# DheBoilerplate
+# MiniCommerce
 
-Dhe Next.js 8 Boilerplate
+with Dhe Next.js 8 Boilerplate
+
+# Note
+
+- For manual login, there is no validation yet, so you can use any email and password
+- Cart data is stored in cookies, so the first time you log in is empty
+- Delete cart data manually from local storage
 
 Prerequisites
-
 Node.js (v10 or higher)
-
 npm (v6.5 or higher)
 
 What's Inside?
-
 Next.js (React.js with superpower)
 
 Custom server (Express)
@@ -25,16 +28,9 @@ Development
 
 # Clone the repo and then run
 
-$ npm install
-  $ npm run dev
-
-Production
-
-# Clone the repo and then run
-
-$ npm install
-  $ npm run build
-\$ npm start
+$ rename .env.example to .env
+  $ npm install
+\$ npm run dev
 
 Project Directory
 
