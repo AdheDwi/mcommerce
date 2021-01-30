@@ -8,6 +8,9 @@ import {
   GET_PRODUCT_WISHLIST_REQUEST,
   GET_PRODUCT_WISHLIST_SUCCESS,
   GET_PRODUCT_WISHLIST_FAILURE,
+  SEARCH_PRODUCT_REQUEST,
+  SEARCH_PRODUCT_SUCCESS,
+  SEARCH_PRODUCT_FAILURE,
 } from "../constants";
 
 export const initialState = {
@@ -20,6 +23,9 @@ export const initialState = {
   loadingWishlist: false,
   errWishlist: null,
   dataWishlist: {},
+  loadingSearch: false,
+  errSearch: null,
+  dataSearch: [],
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -89,6 +95,28 @@ export const productReducer = (state = initialState, action) => {
         loadingWishlist: false,
         errWishlist: action.err,
         dataWishlist: {},
+      };
+
+    case SEARCH_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loadingSearch: true,
+        errSearch: null,
+        dataSearch: [],
+      };
+    case SEARCH_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loadingSearch: false,
+        errSearch: null,
+        dataSearch: action.data,
+      };
+    case SEARCH_PRODUCT_FAILURE:
+      return {
+        ...state,
+        loadingSearch: false,
+        errSearch: action.err,
+        dataSearch: [],
       };
 
     default:

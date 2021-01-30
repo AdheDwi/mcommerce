@@ -16,14 +16,7 @@ const Search = () => (
       <meta name="description" content="MiniCommerce" />
       <meta name="keywords" content="MiniCommerce" />
     </Head>
-    <WishlistContainer />
+    <SearchContainer />
   </Fragment>
 );
-
-Search.getInitialProps = async (ctx) => {
-  ctx.store.dispatch(getProductWishlistAction());
-
-  return {};
-};
-
 export default Search;

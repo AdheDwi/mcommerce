@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
-import { Link } from "../routes";
 import Menu from "../components/menu";
 import CardProduct from "../components/cardProduct";
 
@@ -32,11 +31,10 @@ const CartContainer = () => {
   return (
     <div className="full-page-wrapper">
       <div className="header-wrapper d-flex align-items-center">
-        <Link route="/">
-          <a>
-            <i className={`fa fa-arrow-left`} />
-          </a>
-        </Link>
+        <a href="javascript:void(0)" onClick={() => router.back()}>
+          <i className={`fa fa-arrow-left`} />
+        </a>
+
         <h1>Cart</h1>
       </div>
       <div className="product-list-wrapper">

@@ -7,6 +7,8 @@ import {
   GET_PRODUCT_BY_ID_FAILURE,
   GET_PRODUCT_WISHLIST_SUCCESS,
   GET_PRODUCT_WISHLIST_FAILURE,
+  SEARCH_PRODUCT_SUCCESS,
+  SEARCH_PRODUCT_FAILURE,
 } from "../constants";
 
 export function* getProductSaga() {
@@ -44,5 +46,20 @@ export function* getProductWishlistSaga() {
     });
   } else {
     yield put({ type: GET_PRODUCT_WISHLIST_FAILURE, err });
+  }
+}
+
+export function* searchProductSaga(action) {
+  const { ok, err, data } = yield call(getProductApi);
+  if (ok) {
+    yield put({
+      type: SEARCH_PRODUCT_SUCCESS,
+      data: data[0].data.productPromo.filter(
+        (product) =>
+          action.value.length > 2 && product.title.includes(action.value.trim())
+      ),
+    });
+  } else {
+    yield put({ type: SEARCH_PRODUCT_FAILURE, err });
   }
 }

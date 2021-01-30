@@ -28,14 +28,14 @@ const WishlistContainer = (props) => {
     productLoved[id] = number === 0 ? 1 : 0;
     setLoved(productLoved);
   };
+
   return (
     <div className="full-page-wrapper">
       <div className="header-wrapper d-flex align-items-center">
-        <Link route="/">
-          <a>
-            <i className={`fa fa-arrow-left`} />
-          </a>
-        </Link>
+        <a href="javascript:void(0)" onClick={() => router.back()}>
+          <i className={`fa fa-arrow-left`} />
+        </a>
+
         <h1>Wishlist</h1>
       </div>
       <div className="product-list-wrapper">

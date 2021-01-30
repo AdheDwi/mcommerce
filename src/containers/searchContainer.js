@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { FormGroup, Input } from "reactstrap";
+
 import { Link } from "../routes";
 import Menu from "../components/menu";
 import CardProduct from "../components/cardProduct";
@@ -31,14 +33,15 @@ const SearchContainer = (props) => {
   return (
     <div className="full-page-wrapper">
       <div className="header-wrapper d-flex align-items-center">
-        <Link route="/">
-          <a>
-            <i className={`fa fa-arrow-left`} />
-          </a>
-        </Link>
-        <h1>Wishlist</h1>
+        <a href="javascript:void(0)" onClick={() => router.back()}>
+          <i className={`fa fa-arrow-left`} />
+        </a>
+
+        <FormGroup className="mb-0 w-100">
+          <Input type="text" name="search" placeholder="Search..." />
+        </FormGroup>
       </div>
-      <div className="product-list-wrapper">
+      {/* <div className="product-list-wrapper">
         {lengthWishlist > 0 ? (
           <>
             {props.dataWishlist
@@ -58,14 +61,14 @@ const SearchContainer = (props) => {
         ) : (
           <p className="empty-state">Your Wishlist is Empty</p>
         )}
-      </div>
-      <Menu page={"wishlist"} />
+      </div> */}
+      <Menu page={"home"} />
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  dataWishlist: state.product.dataWishlist,
+  dataSearch: state.product.dataSearch,
 });
 
 export default connect(mapStateToProps)(SearchContainer);
