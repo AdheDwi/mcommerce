@@ -6,6 +6,7 @@ routes.add("detail", "/detail/:id");
 routes.add("wishlist", "/wishlist");
 routes.add("cart", "/cart");
 routes.add("search", "/search");
+routes.add("login", "/login");
 
 // routes.add("detailQuery", "/detail/:id", "detail");
 routes.add("about", "/about-us");

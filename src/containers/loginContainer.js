@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Cookies from "universal-cookie";
+
+import { useRouter } from "next/router";
 import {
   Card,
   Button,
@@ -12,6 +15,8 @@ import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 
 const Login = () => {
+  const cookies = new Cookies();
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailErr, setEmailErr] = useState("");
@@ -27,16 +32,33 @@ const Login = () => {
     if (email.length > 0 && password.length > 0) {
       setEmailErr("");
       setPasswordErr("");
-      console.log({ email, password });
+      cookies.set("userId", email, { path: "/" });
+      setTimeout(() => {
+        router.push("/");
+      }, 400);
     }
   };
 
   const responseFacebook = (response) => {
-    console.log(response);
+    if (response) {
+      cookies.set("userId", response.email, { path: "/" });
+      setTimeout(() => {
+        if (cookies.get("userId")) {
+          router.push("/");
+        }
+      }, 400);
+    }
   };
 
   const responseGoogle = (response) => {
-    console.log(response);
+    if (response) {
+      cookies.set("userId", response.profileObj.email, { path: "/" });
+      setTimeout(() => {
+        if (cookies.get("userId")) {
+          router.push("/");
+        }
+      }, 400);
+    }
   };
 
   return (
@@ -81,18 +103,21 @@ const Login = () => {
         <div className="facebook-button-wrap">
           <FacebookLogin
             cssClass="btn btn-block button-facebook"
-            appId="" //APP ID NOT CREATED YET
+            appId="435810364331854"
+            autoLoad={false}
             fields="name,email,picture"
-            callback={responseFacebook}
+            callback={(response) => responseFacebook(response)}
+            disableMobileRedirect={true}
           />
         </div>
 
         <GoogleLogin
           className="btn btn-block"
-          clientId="" //CLIENTID NOT CREATED YET
+          clientId="345717660785-veksvdaa8g7q3jt4p6oakmjeq7q9p3cr.apps.googleusercontent.com"
           buttonText="LOGIN WITH GOOGLE"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
+          cookiePolicy={"single_host_origin"}
         />
       </Card>
     </div>
