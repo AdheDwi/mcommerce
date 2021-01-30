@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import Head from "next/head";
 import LoginContainer from "../containers/loginContainer";
-import HomeContainer from "../containers/homeContainer";
+import HomeContainer from "../containers/detailContainer";
 
 import { getProductAction } from "../actions/product";
 
