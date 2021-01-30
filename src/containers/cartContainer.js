@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import Cookies from "universal-cookie";
 import { Link } from "../routes";
 import Menu from "../components/menu";
 import CardProduct from "../components/cardProduct";
 
-const CartContainer = (props) => {
+const CartContainer = () => {
+  const cookies = new Cookies();
+
+  const [products, setProducts] = useState([]);
   const [loved, setLoved] = useState([]);
-  const [lengthWishlist, setLengthWishlist] = useState(0);
 
   useEffect(() => {
-    if (props.dataWishlist && props.dataWishlist.length > 0) {
-      const getLoved = props.dataWishlist.map((product) => product.loved);
+    if (products.length < 1 && cookies.get("cart") !== undefined) {
+      setProducts(cookies.get("cart"));
+    }
+  }, [products]);
+
+  useEffect(() => {
+    if (products.length > 0) {
+      const getLoved = products.map((product) => product.loved);
       setLoved(getLoved);
     }
-  }, [props.dataWishlist]);
-
-  useEffect(() => {
-    if (loved.length > 0) {
-      const countWishlist = loved.filter((love) => love === 1);
-      setLengthWishlist(countWishlist.length);
-    }
-  }, [loved]);
+  }, [products]);
 
   const addWislist = (e, id, number) => {
     e.preventDefault();
@@ -36,36 +37,27 @@ const CartContainer = (props) => {
             <i className={`fa fa-arrow-left`} />
           </a>
         </Link>
-        <h1>Wishlist</h1>
+        <h1>Cart</h1>
       </div>
-      {/* <div className="product-list-wrapper">
-        {lengthWishlist > 0 ? (
+      <div className="product-list-wrapper">
+        {products.length > 0 ? (
           <>
-            {props.dataWishlist
-              ? props.dataWishlist.map(
-                  (product, i) =>
-                    loved[i] === 1 && (
-                      <CardProduct
-                        i={i}
-                        product={product}
-                        loved={loved}
-                        addWislist={addWislist}
-                      />
-                    )
-                )
-              : ""}
+            {products.map((product, i) => (
+              <CardProduct
+                i={i}
+                product={product}
+                loved={loved}
+                addWislist={addWislist}
+              />
+            ))}
           </>
         ) : (
-          <p className="empty-state">Your Wishlist is Empty</p>
+          <p className="empty-state">Your Cart is Empty</p>
         )}
-      </div> */}
+      </div>
       <Menu page={"cart"} />
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  dataWishlist: state.product.dataWishlist,
-});
-
-export default connect(mapStateToProps)(CartContainer);
+export default CartContainer;

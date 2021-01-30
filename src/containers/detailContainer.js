@@ -42,10 +42,8 @@ const DetailContainer = (props) => {
     setTimeout(() => {
       setShowAllert(true);
     }, 200);
-    // console.log("haha");
   };
 
-  console.log("cc", cookies.get("cart"));
   return (
     <div className="full-page-wrapper pt-3">
       {showAllert && (

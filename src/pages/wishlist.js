@@ -12,9 +12,9 @@ const Wishlist = () => (
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="title" content="MiniCommerce" />
-      <meta name="description" content="MiniCommerce" />
-      <meta name="keywords" content="MiniCommerce" />
+      <meta name="title" content="MiniCommerce - Wishlist" />
+      <meta name="description" content="MiniCommerce wishlist page" />
+      <meta name="keywords" content="MiniCommerce, Wishlist " />
     </Head>
     <WishlistContainer />
   </Fragment>
