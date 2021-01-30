@@ -64,36 +64,28 @@ const HomeContainer = (props) => {
         </Link>
         <h1>Detail Product</h1>
       </div>
-      <div className="category-wrapper">
-        <h1>Categories</h1>
-        <div className="category-scroll">
-          {props.dataProduct.category.map((item) => (
+      <div className="product-list-wrapper">
+        <div className="card-product d-flex align-item-start">
+          <div className="image-wrapper">
             <Link route="/">
-              <div className="category" key={item.id}>
-                <img src={item.imageUrl} alt={item.name} />
-                <p>{item.name}</p>
-              </div>
+              <img src="{product.imageUrl}" alt="{product.title}" />
             </Link>
-          ))}
-        </div>
-      </div>
-      <div className="product-wrapper">
-        <h1>Product List</h1>
-        {props.dataProduct.productPromo.map((product, i) => (
-          <div className="card-product" key={product.id}>
-            <Link route="/">
-              <img src={product.imageUrl} alt={product.title} />
-            </Link>
-            <div className="product-desc">
+          </div>
+          <div className="text-wrapper">
+            <div className="detail-product-title mb-0">
               <Link route="/">
-                <h2>{product.title}</h2>
+                <h2>Apa</h2>
               </Link>
-              <a onClick={(e) => addWislist(e, i, loved[i])}>
+              {/* <a onClick={(e) => addWislist(e, i, loved[i])}>
                 <i className={`fa fa-${loved[i] > 0 ? "heart" : "heart-o"}`} />
+              </a> */}
+              <a href="#">
+                <i className={`fa fa-heart-o`} />
               </a>
             </div>
+            <p>$100</p>
           </div>
-        ))}
+        </div>
       </div>
       <div className="menu-list">
         <Link route="/">

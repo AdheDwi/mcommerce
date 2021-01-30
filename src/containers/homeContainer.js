@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-
-import {
-  Card,
-  Button,
-  FormGroup,
-  Label,
-  Input,
-  FormFeedback,
-} from "reactstrap";
+import { FormGroup, Input } from "reactstrap";
 import { Link } from "../routes";
+
+import Menu from "../components/menu";
 
 const HomeContainer = (props) => {
   const [loved, setLoved] = useState([]);
 
   useEffect(() => {
-    if (props.dataProduct.productPromo.length > 0) {
+    if (props.dataProduct && props.dataProduct.productPromo.length > 0) {
       const getLoved = props.dataProduct.productPromo.map(
         (product) => product.loved
       );
       setLoved(getLoved);
     }
-  }, [props.dataProduct.productPromo.length]);
+  }, [props.dataProduct]);
 
   const addWislist = (e, id, number) => {
     e.preventDefault();
@@ -66,60 +60,39 @@ const HomeContainer = (props) => {
       <div className="category-wrapper">
         <h1>Categories</h1>
         <div className="category-scroll">
-          {props.dataProduct.category.map((item) => (
-            <Link route="/">
-              <div className="category" key={item.id}>
-                <img src={item.imageUrl} alt={item.name} />
-                <p>{item.name}</p>
-              </div>
-            </Link>
-          ))}
+          {props.dataProduct &&
+            props.dataProduct.category.map((item) => (
+              <Link route="/">
+                <div className="category" key={item.id}>
+                  <img src={item.imageUrl} alt={item.name} />
+                  <p>{item.name}</p>
+                </div>
+              </Link>
+            ))}
         </div>
       </div>
       <div className="product-wrapper">
         <h1>Product List</h1>
-        {props.dataProduct.productPromo.map((product, i) => (
-          <div className="card-product" key={product.id}>
-            <Link route="/">
-              <img src={product.imageUrl} alt={product.title} />
-            </Link>
-            <div className="product-desc">
-              <Link route="/">
-                <h2>{product.title}</h2>
+        {props.dataProduct &&
+          props.dataProduct.productPromo.map((product, i) => (
+            <div className="card-product" key={product.id}>
+              <Link href={`/detail/${product.id}`}>
+                <img src={product.imageUrl} alt={product.title} />
               </Link>
-              <a onClick={(e) => addWislist(e, i, loved[i])}>
-                <i className={`fa fa-${loved[i] > 0 ? "heart" : "heart-o"}`} />
-              </a>
+              <div className="product-desc">
+                <Link href={`/detail/${product.id}`}>
+                  <h2>{product.title}</h2>
+                </Link>
+                <a onClick={(e) => addWislist(e, i, loved[i])}>
+                  <i
+                    className={`fa fa-${loved[i] > 0 ? "heart" : "heart-o"}`}
+                  />
+                </a>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
-      <div className="menu-list">
-        <Link route="/">
-          <a className="menu active">
-            <i className="fa fa-home" aria-hidden="true"></i>
-            <span>Home</span>
-          </a>
-        </Link>
-        <Link route="/">
-          <a className="menu">
-            <i className="fa fa-heart" aria-hidden="true"></i>
-            <span>Wishlist</span>
-          </a>
-        </Link>
-        <Link route="/">
-          <a className="menu">
-            <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-            <span>Cart</span>
-          </a>
-        </Link>
-        <Link route="/">
-          <a className="menu">
-            <i className="fa fa-sign-out" aria-hidden="true"></i>
-            <span>Logout</span>
-          </a>
-        </Link>
-      </div>
+      <Menu />
     </div>
   );
 };

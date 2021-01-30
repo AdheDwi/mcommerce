@@ -1,37 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-
-import {
-  Card,
-  Button,
-  FormGroup,
-  Label,
-  Input,
-  FormFeedback,
-} from "reactstrap";
+import { useRouter } from "next/router";
 import { Link } from "../routes";
 
-const HomeContainer = (props) => {
-  const [loved, setLoved] = useState([]);
+const DetailContainer = (props) => {
+  const router = useRouter();
+
+  const [loved, setLoved] = useState(0);
 
   useEffect(() => {
-    if (props.dataProduct.productPromo.length > 0) {
-      const getLoved = props.dataProduct.productPromo.map(
-        (product) => product.loved
-      );
-      setLoved(getLoved);
-    }
-  }, [props.dataProduct.productPromo.length]);
+    setLoved(props.detailProduct.loved);
+  }, [props.detailProduct]);
 
-  const addWislist = (e, id, number) => {
+  const addWislist = (e, number) => {
     e.preventDefault();
-    const productLoved = [...loved];
-    productLoved[id] = number === 0 ? 1 : 0;
-    setLoved(productLoved);
-    console.log("jos");
+    const setNumber = number === 0 ? 1 : 0;
+    setLoved(setNumber);
   };
 
-  console.log(loved);
   // const setLogin = () => {
   //   if (email.length < 1) {
   //     setEmailErr("Email tidak boleh kosong");
@@ -45,47 +31,35 @@ const HomeContainer = (props) => {
   //     console.log({ email, password });
   //   }
   // };
-
-  // const responseFacebook = (response) => {
-  //   console.log(response);
-  // };
-
-  // const responseGoogle = (response) => {
-  //   console.log(response);
-  // };
-
   return (
     <div className="full-page-wrapper pt-3">
       <div className="detail-product-image">
         <div className="abolute-wrapp">
-          <Link route="/">
-            <a>
-              <i className={`fa fa-arrow-left`} />
-            </a>
-          </Link>
+          <a href="javascript:void(0)" onClick={() => router.back()}>
+            <i className={`fa fa-arrow-left`} />
+          </a>
 
           <a href="#">
             <i className={`fa fa-share-alt`} />
           </a>
         </div>
-        <img />
+        <img
+          src={props.detailProduct.imageUrl}
+          alt={`image-${props.detailProduct.title}`}
+        />
       </div>
       <div className="detail-product-desc">
         <div className="detail-product-title">
-          <Link route="/">
-            <h2>Apa</h2>
-          </Link>
-          {/* <a onClick={(e) => addWislist(e, i, loved[i])}>
-            <i className={`fa fa-${loved[i] > 0 ? "heart" : "heart-o"}`} />
-          </a> */}
-          <a href="#">
-            <i className={`fa fa-heart-o`} />
+          <h2>{props.detailProduct.title}</h2>
+
+          <a href="#" onClick={(e) => addWislist(e, loved)}>
+            <i className={`fa fa-${loved > 0 ? "heart" : "heart-o"}`} />
           </a>
         </div>
-        <p>hahahahahahahaahhahahahah</p>
+        <p>{props.detailProduct.description}</p>
       </div>
       <div className="detail-product-action">
-        <p>600</p>
+        <p>{props.detailProduct.price}</p>
         <button className="btn button-primary">Buy</button>
       </div>
     </div>
@@ -93,7 +67,7 @@ const HomeContainer = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  dataProduct: state.product.dataProduct,
+  detailProduct: state.product.detailProduct,
 });
 
-export default connect(mapStateToProps)(HomeContainer);
+export default connect(mapStateToProps)(DetailContainer);
