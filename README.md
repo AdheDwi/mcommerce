@@ -8,7 +8,7 @@ with Dhe Next.js 8 Boilerplate
 - Cart data is stored in cookies, so the first time you log in is empty
 - Delete cart data manually from local storage
 
-Prerequisites
+# Prerequisites
 Node.js (v10 or higher)
 npm (v6.5 or higher)
 
@@ -23,15 +23,12 @@ Redux (saga)
 CSS
 
 Getting Started
-
-Development
-
 # Clone the repo and then run
 
-$ rename .env.example to .env
-  $ npm install
-$ npm run dev
-      $ run localhost:8080
+- rename .env.example to .env
+- npm install
+- npm run dev
+- run on http://localhost:8080
 
 Project Directory
 
