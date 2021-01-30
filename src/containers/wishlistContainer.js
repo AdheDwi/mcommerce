@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Link } from "../routes";
+import { useRouter } from "next/router";
 import Menu from "../components/menu";
 import CardProduct from "../components/cardProduct";
 
 const WishlistContainer = (props) => {
+  const router = useRouter();
+
   const [loved, setLoved] = useState([]);
   const [lengthWishlist, setLengthWishlist] = useState(0);
 

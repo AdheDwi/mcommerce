@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "../routes";
 
 const CardProduct = (props) => {
-  console.log(props);
   return (
     <div className="card-product d-flex align-item-start">
       <div className="image-wrapper">

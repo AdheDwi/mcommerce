@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import Menu from "../components/menu";
 import CardProduct from "../components/cardProduct";
+import { useRouter } from "next/router";
 
 const CartContainer = () => {
+  const router = useRouter();
   const cookies = new Cookies();
 
   const [products, setProducts] = useState([]);

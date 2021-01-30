@@ -30,7 +30,8 @@ Development
 
 $ rename .env.example to .env
   $ npm install
-\$ npm run dev
+$ npm run dev
+      $ run localhost:8080
 
 Project Directory
 
